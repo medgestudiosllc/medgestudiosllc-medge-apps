@@ -60,7 +60,7 @@ The result should match the checksum in the release notes.
 ## For the MEdge team: publishing a new build
 
 1. Build the APK with EAS (`eas build --profile preview --platform android`) and download it.
-2. Create a release here tagged `<app>-v<version>`, for example `coinbuddy-v1.5.0`, and attach the APK named `<App>-<version>.apk`.
+2. Add an entry to `releases.json` with the tag (`<app>-v<version>`, for example `coinbuddy-v1.5.0`), the file name, the EAS artifact URL and the APK's SHA-256 (`shasum -a 256 file.apk`). Push to `main`: the **Publish releases** workflow downloads the APK, checks the checksum and creates the release.
 3. Update `apkUrl` and `version` for the app in `src/lib/apps-data.ts` in the medge-creatives-web repo. The `/download/<app>` link then points to the new file.
 4. Update the table above.
 
