@@ -1,0 +1,58 @@
+# Publishes every build listed in releases.json as a GitHub release with its APK attached.
+# Each APK is downloaded from its EAS build URL and must match the listed SHA-256 before it is
+# published. Builds that already have a release are skipped, so re-running is safe.
+# To publish a new build: add an entry to releases.json and push, or run this workflow by hand.
+name: Publish releases
+
+on:
+  push:
+    branches: [main]
+    paths: [releases.json, .github/workflows/publish-releases.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create missing releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          count=$(jq length releases.json)
+          for i in $(seq 0 $((count - 1))); do
+            tag=$(jq -r ".[$i].tag" releases.json)
+            if gh release view "$tag" >/dev/null 2>&1; then
+              echo "::notice::$tag already published, skipping"
+              continue
+            fi
+            title=$(jq -r ".[$i].title" releases.json)
+            file=$(jq -r ".[$i].file" releases.json)
+            source=$(jq -r ".[$i].source" releases.json)
+            want=$(jq -r ".[$i].sha256" releases.json)
+            app=$(jq -r ".[$i].app" releases.json)
+            notes=$(jq -r ".[$i].notes" releases.json)
+
+            echo "Downloading $file"
+            curl -fsSL --retry 3 -o "$file" "$source"
+            got=$(sha256sum "$file" | cut -d' ' -f1)
+            if [ "$got" != "$want" ]; then
+              echo "::error::$file checksum mismatch (got $got, want $want)"
+              exit 1
+            fi
+
+            body="$notes
+
+          **Install:** open the APK on your Android phone (Android 7 or later) and follow the steps in the [README](https://github.com/${GITHUB_REPOSITORY}#how-to-install).
+
+          **Share link:** medgecreatives.com/download/$app
+
+          SHA-256: \`$got\`"
+            gh release create "$tag" "$file" --title "$title" --notes "$body"
+            rm -f "$file"
+          done

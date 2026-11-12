@@ -1,0 +1,29 @@
+[
+  {
+    "tag": "coinbuddy-v1.4.0",
+    "title": "CoinBuddy 1.4.0 (beta)",
+    "file": "CoinBuddy-1.4.0.apk",
+    "source": "https://expo.dev/artifacts/eas/ygtsup9DcCGpdRJjKzldGD8XCQEtY0KS6D_rgQ85F04.apk",
+    "sha256": "a67a97fefda2020dffca4b08e9916fb427a637e9b297cb5bab5c1bcdf379904b",
+    "app": "coinbuddy",
+    "notes": "Buy and sell crypto with Mobile Money in Ghana. This build tightens permissions: no microphone, storage, media or overlay access, and Android backup is off."
+  },
+  {
+    "tag": "homescout-v1.0.0",
+    "title": "HomeScout 1.0.0 (test build)",
+    "file": "HomeScout-1.0.0.apk",
+    "source": "https://expo.dev/artifacts/eas/PUXk4q0E455dRV311CugXpDje7x9IfV67vxSo3Eg2-Q.apk",
+    "sha256": "28baa569f1190de4a6dc87a7d3907b8015d0a12e99e7c1bc68f779ebc792a146",
+    "app": "homescout",
+    "notes": "Browse verified rental homes across Ghana and message owners directly. Plans are shown as status only in the app; subscriptions are handled on the web."
+  },
+  {
+    "tag": "whisper-v0.1.0-build6",
+    "title": "Whisper 0.1.0, build 6 (test build)",
+    "file": "Whisper-0.1.0-build6.apk",
+    "source": "https://expo.dev/artifacts/eas/aNQwXS2FTogLpSDQEcw8xAuyUXVDks3S0HpB1gOgtUc.apk",
+    "sha256": "3b18a99cf9504510f43e1e22dddaac6c2989b44bab8e9470b07b865cbdb0e427",
+    "app": "whisper",
+    "notes": "A calm Telegram client. This build adds Settings and Edit Profile, appearance options, rich text, polls, in-chat search and more reliable storage.\n\nUnofficial app built on the Telegram API. Not affiliated with Telegram."
+  }
+]
